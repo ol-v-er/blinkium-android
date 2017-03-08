@@ -12,10 +12,10 @@ import android.widget.Button;
 
 import fr.openium.blinkiumandroid.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-    String identifiant;
-    String password;
+    private EditText mEditTextIdentifier;
+    private EditText mEditTextPassword;
 
     //Unused for the moment. Names will be changed
     final String EXTRA_LOGIN = "user_login";
@@ -26,25 +26,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button loginButton = (Button)findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View view){
-                if(view.getId() == R.id.loginButton){
-                    EditText temp = (EditText)findViewById(R.id.idField);
-                    identifiant = temp.getText().toString();
-
-                    temp = (EditText)findViewById(R.id.passField);
-                    password = temp.getText().toString();
-
-                    Intent intent = new Intent(MainActivity.this, Logged_Activity.class);
-                    intent.putExtra(EXTRA_LOGIN, identifiant);
-                    intent.putExtra(EXTRA_PASSWORD, password);
-                    startActivity(intent);
-                }
-            }
-        });
+        mEditTextIdentifier = (EditText) findViewById(R.id.idField);
+        mEditTextPassword = (EditText) findViewById(R.id.passField);
 
 
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.loginButton) {
+            String identifiant = mEditTextIdentifier.getText().toString();
+            String password = mEditTextPassword.getText().toString();
+
+            Intent intent = new Intent(MainActivity.this, Logged_Activity.class);
+            intent.putExtra(EXTRA_LOGIN, identifiant);
+            intent.putExtra(EXTRA_PASSWORD, password);
+            startActivity(intent);
+        }
     }
 }
