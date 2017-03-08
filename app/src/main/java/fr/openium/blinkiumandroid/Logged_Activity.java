@@ -1,4 +1,4 @@
-package com.example.kevin.myapplication;
+package fr.openium.blinkiumandroid;
 
 import android.content.Intent;
 import android.graphics.Color;

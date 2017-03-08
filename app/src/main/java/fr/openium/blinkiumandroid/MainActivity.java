@@ -1,4 +1,4 @@
-package com.example.kevin.myapplication;
+package fr.openium.blinkiumandroid;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import fr.openium.blinkiumandroid.R;
 
 public class MainActivity extends AppCompatActivity {
 
