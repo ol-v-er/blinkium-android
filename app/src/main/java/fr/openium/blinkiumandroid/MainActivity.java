@@ -17,10 +17,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private EditText mEditTextIdentifier;
     private EditText mEditTextPassword;
 
-    //Unused for the moment. Names will be changed
-    final String EXTRA_LOGIN = "user_login";
-    final String EXTRA_PASSWORD = "user_password";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +37,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             String identifiant = mEditTextIdentifier.getText().toString();
             String password = mEditTextPassword.getText().toString();
 
-            Intent intent = new Intent(MainActivity.this, Logged_Activity.class);
-            intent.putExtra(EXTRA_LOGIN, identifiant);
-            intent.putExtra(EXTRA_PASSWORD, password);
+            Intent intent = new Intent(this, Logged_Activity.class);
+            intent.putExtra(Logged_Activity.EXTRA_LOGIN, identifiant);
+            intent.putExtra(Logged_Activity.EXTRA_PASSWORD, password);
             startActivity(intent);
         }
     }

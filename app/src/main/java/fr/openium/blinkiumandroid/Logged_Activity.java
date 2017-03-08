@@ -17,24 +17,12 @@ import android.widget.RelativeLayout;
 public class Logged_Activity extends AppCompatActivity {
 
     //Unused for the moment
-    final String EXTRA_LOGIN = "user_login";
-    final String EXTRA_PASSWORD = "user_password";
+    final public static String EXTRA_LOGIN = "user_logim";
+    final public static String EXTRA_PASSWORD = "user_password";
 
     private String login;
 
-    final private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg){
-            super.handleMessage(msg);
-            RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_logged);
-            if (msg.arg1 == 0) {
-                view.setBackgroundColor(Color.BLACK);
-            } else {
-                view.setBackgroundColor(Color.WHITE);
-            }
-        }
-    };
-
+    // find a way to make this activity to return the good intent to start it
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,4 +81,21 @@ public class Logged_Activity extends AppCompatActivity {
         Thread test = new Thread(loop);
         test.start();
     }
+
+
+    final private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_logged);
+            if (msg.arg1 == 0) {
+                view.setBackgroundColor(Color.BLACK);
+            } else {
+                view.setBackgroundColor(Color.WHITE);
+            }
+        }
+    };
+
+
+
 }
