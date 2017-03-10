@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Logged_Activity">
+        <activity android:name=".Blink_Activity">
         </activity>
     </application>
 

@@ -1,16 +1,12 @@
 package fr.openium.blinkiumandroid;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-import fr.openium.blinkiumandroid.R;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -37,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             String identifiant = mEditTextIdentifier.getText().toString();
             String password = mEditTextPassword.getText().toString();
 
-            Intent intent = new Intent(this, Logged_Activity.class);
-            intent.putExtra(Logged_Activity.EXTRA_LOGIN, identifiant);
-            intent.putExtra(Logged_Activity.EXTRA_PASSWORD, password);
+            Intent intent = new Intent(this, Blink_Activity.class);
+            intent.putExtra(Blink_Activity.EXTRA_LOGIN, identifiant);
+            intent.putExtra(Blink_Activity.EXTRA_PASSWORD, password);
             startActivity(intent);
         }
     }

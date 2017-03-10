@@ -12,7 +12,6 @@ public class ConvertUtils {
         byte[] body = stringToBin(s);
         byte[] result = new byte[startCode.length + header.length + body.length];
 
-
         System.arraycopy(startCode, 0, result, 0, startCode.length);
         System.arraycopy(header, 0, result, startCode.length, header.length);
         System.arraycopy(body, 0, result, startCode.length+header.length, body.length);
