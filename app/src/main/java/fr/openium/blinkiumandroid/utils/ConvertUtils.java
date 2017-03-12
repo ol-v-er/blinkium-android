@@ -1,5 +1,7 @@
 package fr.openium.blinkiumandroid.utils;
 
+import android.util.Log;
+
 /**
  * Created by Kevin on 10/03/2017.
  */
@@ -15,6 +17,11 @@ public class ConvertUtils {
         System.arraycopy(startCode, 0, result, 0, startCode.length);
         System.arraycopy(header, 0, result, startCode.length, header.length);
         System.arraycopy(body, 0, result, startCode.length+header.length, body.length);
+
+        //System.out.print(result[i]);
+        /*for(int i = 0; i < result.length; i++) {
+            Log.v("Convert", "" +  result[i]);
+        }*/
 
         return result;
     }

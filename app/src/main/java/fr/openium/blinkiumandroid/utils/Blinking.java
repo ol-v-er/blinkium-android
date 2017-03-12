@@ -9,11 +9,13 @@ import android.os.Message;
 
 public class Blinking implements Runnable {
 
-    private byte[] datas;
+    private byte[] ssid;
+    private byte[] password;
     private Handler handler;
 
-    public Blinking(byte[] datas, Handler handler){
-        this.datas = datas;
+    public Blinking(byte[] ssid, byte[] password, Handler handler){
+        this.ssid = ssid;
+        this.password = password;
         this.handler = handler;
     }
 
@@ -24,18 +26,35 @@ public class Blinking implements Runnable {
 
     @Override
     public void run() {
-        boolean running = true;
-        int count = 0;
-        int freq = 25;
-
         //To give the time to put the phone on top of the light detector
+        for(int i = 3; i >= 0; i-- ){
+            Message msg = handler.obtainMessage(0, 2, i);
+            handler.sendMessage(msg);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        sendDatas(ssid);
+
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        sendDatas(password);
+
+    }
+
+    private void sendDatas(byte[] datas){
+        int freq = 60;
         long time = 0;
+        boolean running = true;
+        int count = 0;
         while (running) {
             if (System.currentTimeMillis() - time > 1000.f / freq) {
                 time = System.currentTimeMillis();
