@@ -46,10 +46,11 @@ public class Blink_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blinking);
 
-        RelativeLayout view = (RelativeLayout) findViewById(R.id.activity_logged);
-        view.setBackgroundColor(Color.BLACK);
+        /*RelativeLayout view = (RelativeLayout) findViewById(R.id.activity_blinking);
+        view.setBackgroundColor(Color.BLACK);*/
 
         blink_view = (Blink_View) findViewById(R.id.blink_view);
+        //blink_view.set
 
         Intent intent = getIntent();
         if (intent != null) {

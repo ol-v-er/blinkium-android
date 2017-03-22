@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +8,19 @@
     android:id="@+id/activity_logged"
     android:gravity="center_vertical|center">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salut !"
+        android:textSize="80px"
+        android:textColor="#FF0000"
+        android:textAlignment="center" />
+
     <fr.openium.blinkiumandroid.Blink_View
         android:id="@+id/blink_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="400px"
+        android:minWidth="600px"/>
 
-</RelativeLayout>
+</LinearLayout>
