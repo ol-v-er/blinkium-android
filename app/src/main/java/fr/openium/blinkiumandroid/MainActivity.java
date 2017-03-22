@@ -30,12 +30,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void onClick(View v) {
 
         if (v.getId() == R.id.loginButton) {
-            String identifiant = mEditTextIdentifier.getText().toString();
+            String login = mEditTextIdentifier.getText().toString();
             String password = mEditTextPassword.getText().toString();
 
-            Intent intent = new Intent(this, Blink_Activity.class);
-            intent.putExtra(Blink_Activity.EXTRA_LOGIN, identifiant);
-            intent.putExtra(Blink_Activity.EXTRA_PASSWORD, password);
+            Intent intent = Blink_Activity.getIntent(this, login, password);
             startActivity(intent);
         }
     }

@@ -1,5 +1,6 @@
 package fr.openium.blinkiumandroid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -26,14 +27,19 @@ import fr.openium.blinkiumandroid.utils.ConvertUtils;
 
 public class Blink_Activity extends AppCompatActivity {
 
-    //Unused for the moment
     final public static String EXTRA_LOGIN = "user_login";
     final public static String EXTRA_PASSWORD = "user_password";
     private Blink_View blink_view;
 
     private String login;
     private String password;
-    // find a way to make this activity to return the good intent to start it
+
+    public static final Intent getIntent(Context context, String login, String password){
+        Intent intent = new Intent(context, Blink_Activity.class);
+        intent.putExtra(EXTRA_LOGIN, login);
+        intent.putExtra(EXTRA_PASSWORD, password);
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
