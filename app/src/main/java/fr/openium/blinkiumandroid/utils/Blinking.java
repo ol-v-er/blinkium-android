@@ -11,16 +11,20 @@ import android.util.Log;
 
 public class Blinking implements Runnable {
 
-    private byte[] ssid;
-    private byte[] password;
+    public static final int BLINKING_DATA = 0;
+    public static final int COUNTDOWN_DATA = 1;
+
+    private Blink_State[] ssid;
+    private Blink_State[] password;
     private Handler handler;
 
     public Blinking(byte[] ssid, byte[] password, Handler handler){
-        //this.ssid = ssid;
-        this.password = password;
+        //this.ssid = ConvertUtils.byteArrayToBlinkStateArray(ssid);
+        this.password = ConvertUtils.byteArrayToBlinkStateArray(password);
         this.handler = handler;
 
-        this.ssid = ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+        this.ssid = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
+
 
     }
 
@@ -28,7 +32,7 @@ public class Blinking implements Runnable {
     public void run() {
         //To give the time to put the phone on top of the light detector
         for(int i = 3; i >= 0; i-- ){
-            Message msg = handler.obtainMessage(0, 2, i);
+            Message msg = handler.obtainMessage(COUNTDOWN_DATA, i, 0);
             handler.sendMessage(msg);
             try {
                 Thread.sleep(1000);
@@ -50,7 +54,7 @@ public class Blinking implements Runnable {
 
     }
 
-    private void sendDatas(byte[] datas){
+    private void sendDatas(Blink_State[] datas){
         int freq = 30;
         long time = 0;
         boolean running = true;
@@ -61,7 +65,7 @@ public class Blinking implements Runnable {
             if (t - time > 1000000000.f / freq) {
                 time = t;
                 //Sending the value of the actual bit to the handler
-                Message msg = handler.obtainMessage(0, datas[count], 0);
+                Message msg = handler.obtainMessage(BLINKING_DATA, datas[count]);
                 handler.sendMessage(msg);
 
                 count++;

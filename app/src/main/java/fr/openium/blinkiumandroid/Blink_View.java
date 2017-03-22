@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import fr.openium.blinkiumandroid.utils.Blink_State;
 import fr.openium.blinkiumandroid.utils.Blinking;
 import fr.openium.blinkiumandroid.utils.ConvertUtils;
 
@@ -75,16 +76,18 @@ public class Blink_View extends LinearLayout {
 
     public void updateView(Message msg){
         countdown.setVisibility(INVISIBLE);
-        if (msg.arg1 == 0) {
-            this.setBackgroundColor(Color.BLACK);
-        } else if (msg.arg1 == 1){
-            this.setBackgroundColor(Color.WHITE);
-        } else if (msg.arg1 == 2){
+        if(msg.what == Blinking.BLINKING_DATA){
+            if (msg.obj == Blink_State.BLACK) {
+                this.setBackgroundColor(Color.BLACK);
+            } else if (msg.obj == Blink_State.WHITE){
+                this.setBackgroundColor(Color.WHITE);
+            }
+        } else if (msg.what == Blinking.COUNTDOWN_DATA){
             countdown.setVisibility(VISIBLE);
-            if(msg.arg2 == 0){
+            if(msg.arg1 == 0){
                 countdown.setText("GO");
             }else {
-                countdown.setText(Integer.toString(msg.arg2));
+                countdown.setText(Integer.toString(msg.arg1));
             }
         }
     }

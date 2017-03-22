@@ -8,6 +8,21 @@ import android.util.Log;
 
 public class ConvertUtils {
 
+    public static Blink_State[] byteArrayToBlinkStateArray(byte[] array){
+        Blink_State[] result = new Blink_State[array.length];
+
+        for(int i = 0; i < array.length; i++){
+            if(array[i] == 0){
+                result[i] = Blink_State.BLACK;
+            }
+            else if (array[i] == 1){
+                result[i] = Blink_State.WHITE;
+            }
+        }
+
+        return result;
+    }
+
     public static byte[] encode(String s){
         byte[] startCode = { 1, 0, 1};
         byte[] header = generateHeader(s);
