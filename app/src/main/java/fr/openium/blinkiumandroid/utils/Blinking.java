@@ -2,6 +2,8 @@ package fr.openium.blinkiumandroid.utils;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
 
 /**
  * Created by Kevin on 10/03/2017.
@@ -14,15 +16,13 @@ public class Blinking implements Runnable {
     private Handler handler;
 
     public Blinking(byte[] ssid, byte[] password, Handler handler){
-        this.ssid = ssid;
+        //this.ssid = ssid;
         this.password = password;
         this.handler = handler;
-    }
 
-    /*private byte[] datas = { 1, 0, 1,  0, 0, 0, 0, 0, 0, 1, 1,  0, 0, 0, 1, /*header
-            1, 1, 1, 1, 1, 1, 1, 1,
-            0, 0, 0, 0, 0, 0, 0, 0,
-            1, 0, 1, 0, 1, 0, 1, 0};*/
+        this.ssid = ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+
+    }
 
     @Override
     public void run() {
@@ -51,13 +51,15 @@ public class Blinking implements Runnable {
     }
 
     private void sendDatas(byte[] datas){
-        int freq = 60;
+        int freq = 30;
         long time = 0;
         boolean running = true;
         int count = 0;
+        long t;
         while (running) {
-            if (System.currentTimeMillis() - time > 1000.f / freq) {
-                time = System.currentTimeMillis();
+            t = System.nanoTime();
+            if (t - time > 1000000000.f / freq) {
+                time = t;
                 //Sending the value of the actual bit to the handler
                 Message msg = handler.obtainMessage(0, datas[count], 0);
                 handler.sendMessage(msg);

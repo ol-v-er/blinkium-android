@@ -18,15 +18,10 @@ public class ConvertUtils {
         System.arraycopy(header, 0, result, startCode.length, header.length);
         System.arraycopy(body, 0, result, startCode.length+header.length, body.length);
 
-        //System.out.print(result[i]);
-        /*for(int i = 0; i < result.length; i++) {
-            Log.v("Convert", "" +  result[i]);
-        }*/
-
         return result;
     }
 
-    private static byte[] generateHeader(String s){
+    public static byte[] generateHeader(String s){
         int dataLen = (short) s.length();
         int dataSize = 1;
         byte[] header = new byte[8+4];
@@ -40,12 +35,12 @@ public class ConvertUtils {
         return header;
     }
 
-    private static byte[] asciiToBin(char c){
+    public static byte[] asciiToBin(char c){
         return decToBin((int)c, 8);
     }
 
 
-    private static byte[] decToBin(int dec, int size){
+    public static byte[] decToBin(int dec, int size){
         byte[] result = new byte[size];
         int temp = dec;
 
@@ -59,7 +54,7 @@ public class ConvertUtils {
         return result;
     }
 
-    private static byte[] stringToBin(String s){
+    public static byte[] stringToBin(String s){
         byte[] charBin;
         byte[] result = new byte[s.length()*8];
         //Conversion de la chaine

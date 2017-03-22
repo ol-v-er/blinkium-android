@@ -2,12 +2,19 @@ package fr.openium.blinkiumandroid;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import fr.openium.blinkiumandroid.utils.Blinking;
 import fr.openium.blinkiumandroid.utils.ConvertUtils;
@@ -22,10 +29,10 @@ public class Blink_Activity extends AppCompatActivity {
     //Unused for the moment
     final public static String EXTRA_LOGIN = "user_login";
     final public static String EXTRA_PASSWORD = "user_password";
+    private Blink_View blink_view;
 
     private String login;
     private String password;
-
     // find a way to make this activity to return the good intent to start it
 
     @Override
@@ -33,8 +40,10 @@ public class Blink_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blinking);
 
-        RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_logged);
+        RelativeLayout view = (RelativeLayout) findViewById(R.id.activity_logged);
         view.setBackgroundColor(Color.BLACK);
+
+        blink_view = (Blink_View) findViewById(R.id.blink_view);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -42,35 +51,9 @@ public class Blink_Activity extends AppCompatActivity {
             password = intent.getStringExtra(EXTRA_PASSWORD);
         }
 
-        Blinking blinking = new Blinking(ConvertUtils.encode(login), ConvertUtils.encode(password), handler);
-
-        Thread test = new Thread(blinking);
-        test.start();
+        blink_view.go(login, password);
     }
 
-
-    final private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg){
-            super.handleMessage(msg);
-            RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_logged);
-            TextView countdown = (TextView)findViewById(R.id.countdown);
-            countdown.setText("");
-            if (msg.arg1 == 0) {
-                view.setBackgroundColor(Color.BLACK);
-            } else if (msg.arg1 == 1){
-                view.setBackgroundColor(Color.WHITE);
-            } else if (msg.arg1 == 2){
-                if(msg.arg2 == 0){
-                    countdown.setText("GO");
-                }else {
-                    countdown.setText(Integer.toString(msg.arg2));
-                }
-            }
-
-
-        }
-    };
 
 
 
