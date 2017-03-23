@@ -13,6 +13,7 @@ public class Blinking implements Runnable {
 
     public static final int BLINKING_DATA = 0;
     public static final int COUNTDOWN_DATA = 1;
+    public static final int FINISHED_DATA = 2;
 
     private Blink_State[] ssid;
     private Blink_State[] password;
@@ -51,6 +52,9 @@ public class Blinking implements Runnable {
         }
 
         sendDatas(password);
+
+        Message msg = handler.obtainMessage(FINISHED_DATA, 0);
+        handler.sendMessage(msg);
 
     }
 
