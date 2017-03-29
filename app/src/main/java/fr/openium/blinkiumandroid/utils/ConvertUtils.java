@@ -27,11 +27,21 @@ public class ConvertUtils {
         byte[] startCode = { 1, 0, 1};
         byte[] header = generateHeader(s);
         byte[] body = stringToBin(s);
-        byte[] result = new byte[startCode.length + header.length + body.length];
+        byte[] synchro = new byte[60];
+        byte[] result = new byte[startCode.length + header.length + body.length + synchro.length];
+
+        for(int i = 0; i < synchro.length; i++){
+            synchro[i] = (byte) (i % 2);
+        }
 
         System.arraycopy(startCode, 0, result, 0, startCode.length);
+        System.arraycopy(synchro, 0, result, startCode.length, synchro.length);
+        System.arraycopy(header, 0, result, startCode.length+synchro.length, header.length);
+        System.arraycopy(body, 0, result, startCode.length+header.length+synchro.length, body.length);
+
+        /*System.arraycopy(startCode, 0, result, 0, startCode.length);
         System.arraycopy(header, 0, result, startCode.length, header.length);
-        System.arraycopy(body, 0, result, startCode.length+header.length, body.length);
+        System.arraycopy(body, 0, result, startCode.length+header.length, body.length);*/
 
         return result;
     }

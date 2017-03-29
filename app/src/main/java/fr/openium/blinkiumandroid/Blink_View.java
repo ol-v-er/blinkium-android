@@ -35,6 +35,12 @@ public class Blink_View extends LinearLayout {
     //private boolean finished = true;
     private TextView countdown;
     private Thread blink;
+    private Blink_State[] datas;
+    private int index = 0;
+    private int countdown_value;
+    private boolean countdown_flag = false, blinking_flag = false;
+    private long lastTime = 0;
+    private boolean test = true;
 
     public Blink_View(Context context) {
         super(context);
@@ -74,9 +80,16 @@ public class Blink_View extends LinearLayout {
     public boolean isFinished(){ return blink.getState() == Thread.State.TERMINATED; }
 
     public void go(String str1, String str2){
-        Blinking blinking = new Blinking(ConvertUtils.encode(str1), ConvertUtils.encode(str2) ,handler);
+        /*Blinking blinking = new Blinking(ConvertUtils.encode(str1), ConvertUtils.encode(str2) ,handler);
         blink = new Thread(blinking);
-        blink.start();
+        blink.start();*/
+        //datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(str1));
+
+        datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
+        index = 0;
+        countdown_value = 3;
+        countdown_flag = true;
+
     }
 
 
@@ -120,7 +133,7 @@ public class Blink_View extends LinearLayout {
                 min = l;
             }
         }
-        Log.d("blink"+from, ""+average/data.size());
+        Log.d("blink"+from, ""+1.0f*average/data.size());
         Log.d("blink"+from, "max="+max+ " min="+min);
         Log.d("blink"+from, Arrays.toString(data.toArray()));
     }
@@ -150,9 +163,42 @@ public class Blink_View extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        invalidate();
-        logEventOnDraw(mDataOnDraw);
+        if(countdown_flag) {
+            long t = System.nanoTime();
+            if(t - lastTime > 1000000000) {
+                if(countdown_value == 0){
+                    countdown_flag = false;
+                    blinking_flag = true;
+                }
+                countdown.setText(String.valueOf(countdown_value));
+                countdown_value = countdown_value - 1;
+                lastTime = t;
+            }
+        }
 
+        if(blinking_flag) {
+                countdown.setText("");
+                switch (datas[index]) {
+                    case BLACK:
+                        canvas.drawRGB(0, 0, 0);
+                        break;
+                    case WHITE:
+                        canvas.drawRGB(255, 255, 255);
+                        break;
+                }
+
+                logEventOnDraw(mDataOnDraw);
+
+                index = index + 1;
+
+                if (index == datas.length) {
+                    blinking_flag = false;
+                    computeEventTime("onDraw",mDataOnDraw,mPrecedentTimeOnDraw);
+                }
+
+        }
+
+        invalidate();
     }
 
     final private Handler handler = new Handler(){
