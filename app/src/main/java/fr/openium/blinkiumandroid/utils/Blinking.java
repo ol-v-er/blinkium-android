@@ -24,7 +24,7 @@ public class Blinking implements Runnable {
         this.password = ConvertUtils.byteArrayToBlinkStateArray(password);
         this.handler = handler;
 
-        this.ssid = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
+        //this.ssid = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
 
 
     }

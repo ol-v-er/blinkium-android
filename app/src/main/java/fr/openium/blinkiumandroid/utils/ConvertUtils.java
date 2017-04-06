@@ -65,7 +65,7 @@ public class ConvertUtils {
         int dataLen = 0;
 
         for(int i = 0; i < s.size(); i++){
-            dataLen += s.get(i).length();
+            dataLen += (s.get(i).length()+1);
         }
 
         if(dataLen > Math.pow(2, 12)) dataLen = 0;

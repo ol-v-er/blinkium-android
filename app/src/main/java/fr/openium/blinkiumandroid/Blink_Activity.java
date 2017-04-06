@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
+
 import fr.openium.blinkiumandroid.utils.Blinking;
 import fr.openium.blinkiumandroid.utils.ConvertUtils;
 
@@ -54,7 +56,11 @@ public class Blink_Activity extends AppCompatActivity {
             password = intent.getStringExtra(EXTRA_PASSWORD);
         }
 
-        blink_view.go(login, password);
+        ArrayList<String> d = new ArrayList<String>();
+        d.add(login);
+        d.add(password);
+
+        blink_view.go(d);
     }
 
 

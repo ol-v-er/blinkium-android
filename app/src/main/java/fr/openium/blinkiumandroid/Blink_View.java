@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -72,12 +73,12 @@ public class Blink_View extends LinearLayout {
         this.addView(countdown);
     }
 
-    public void go(String str1, String str2){
-        datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
+    public void go(ArrayList<String> d){
+        datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(d));
+        /*datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));*/
         index = 0;
         countdown_value = 3;
         countdown_flag = true;
-
     }
 
 
