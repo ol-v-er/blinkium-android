@@ -1,6 +1,7 @@
 package fr.openium.blinkiumandroid;
 
 import android.app.ActionBar;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,10 +9,13 @@ import android.graphics.LinearGradient;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,9 +36,7 @@ import fr.openium.blinkiumandroid.utils.ConvertUtils;
 
 public class Blink_View extends LinearLayout {
 
-    //private boolean finished = true;
     private TextView countdown;
-    private Thread blink;
     private Blink_State[] datas;
     private int index = 0;
     private int countdown_value;
@@ -57,13 +59,7 @@ public class Blink_View extends LinearLayout {
         init();
     }
 
-    /*public Blink_View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }*/
-
     public void init(){
-        blink = new Thread();
         this.setBackgroundColor(Color.BLACK);
         countdown = new TextView(getContext());
         countdown.setText("");
@@ -74,17 +70,9 @@ public class Blink_View extends LinearLayout {
         countdown.setGravity(Gravity.CENTER_VERTICAL);
         this.setOrientation(LinearLayout.VERTICAL);
         this.addView(countdown);
-
     }
 
-    public boolean isFinished(){ return blink.getState() == Thread.State.TERMINATED; }
-
     public void go(String str1, String str2){
-        /*Blinking blinking = new Blinking(ConvertUtils.encode(str1), ConvertUtils.encode(str2) ,handler);
-        blink = new Thread(blinking);
-        blink.start();*/
-        //datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(str1));
-
         datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));
         index = 0;
         countdown_value = 3;
@@ -116,8 +104,6 @@ public class Blink_View extends LinearLayout {
             data.add(time - mPrecedentTimeOnDraw);
         }
         mPrecedentTimeOnDraw = time;
-
-
     }
 
     private void computeEventTime(String from,ArrayList<Long> data, long mPrecedentTime) {

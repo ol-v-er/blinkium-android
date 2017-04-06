@@ -2,6 +2,10 @@ package fr.openium.blinkiumandroid.utils;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * Created by Kevin on 10/03/2017.
  */
@@ -23,10 +27,25 @@ public class ConvertUtils {
         return result;
     }
 
-    public static byte[] encode(String s){
+    public static byte[] encode(ArrayList<String> s){
         byte[] startCode = { 1, 0, 1};
+        byte[] nullChar = { 0, 0, 0, 0, 0, 0, 0, 0 };
         byte[] header = generateHeader(s);
-        byte[] body = stringToBin(s);
+
+
+        int len = 0, actualIndex = 0;
+        for(int i = 0; i < s.size(); i++){
+            len += (s.get(i).length()+1);
+        }
+        byte[] body = new byte[len*8];
+        for(int i = 0; i < s.size(); i++){
+            byte[] temp = stringToBin(s.get(i));
+            System.arraycopy(temp, 0, body, actualIndex, temp.length);
+            actualIndex += temp.length;
+            System.arraycopy(nullChar, 0, body, actualIndex, 8);
+            actualIndex += 8;
+        }
+
         byte[] synchro = new byte[60];
         byte[] result = new byte[startCode.length + header.length + body.length + synchro.length];
 
@@ -39,23 +58,19 @@ public class ConvertUtils {
         System.arraycopy(header, 0, result, startCode.length+synchro.length, header.length);
         System.arraycopy(body, 0, result, startCode.length+header.length+synchro.length, body.length);
 
-        /*System.arraycopy(startCode, 0, result, 0, startCode.length);
-        System.arraycopy(header, 0, result, startCode.length, header.length);
-        System.arraycopy(body, 0, result, startCode.length+header.length, body.length);*/
-
         return result;
     }
 
-    public static byte[] generateHeader(String s){
-        int dataLen = (short) s.length();
-        int dataSize = 1;
-        byte[] header = new byte[8+4];
+    public static byte[] generateHeader(ArrayList<String> s){
+        int dataLen = 0;
 
-        byte[] len = decToBin(dataLen, 8);
-        byte[] size = decToBin(dataSize, 4);
+        for(int i = 0; i < s.size(); i++){
+            dataLen += s.get(i).length();
+        }
 
-        System.arraycopy(len, 0, header, 0, 8);
-        System.arraycopy(size, 0, header, 8, 4);
+        if(dataLen > Math.pow(2, 12)) dataLen = 0;
+
+        byte[] header = decToBin(dataLen, 12);
 
         return header;
     }

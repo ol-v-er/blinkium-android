@@ -15,7 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Blink_Activity">
+        <activity
+            android:name=".Blink_Activity"
+            android:screenOrientation="portrait"
+            android:keepScreenOn="true"
+            android:hardwareAccelerated="true">
         </activity>
     </application>
 
