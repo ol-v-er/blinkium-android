@@ -74,8 +74,12 @@ public class Blink_View extends LinearLayout {
     }
 
     public void go(ArrayList<String> d){
-        datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(d));
-        /*datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"));*/
+        ArrayList<String> a = new ArrayList<String>();
+        //a.add("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+        a.add("012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+        //a.add("01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+        //datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(d));
+        datas = ConvertUtils.byteArrayToBlinkStateArray(ConvertUtils.encode(a));
         index = 0;
         countdown_value = 3;
         countdown_flag = true;
@@ -94,8 +98,6 @@ public class Blink_View extends LinearLayout {
             data.add(time - mPrecedentTime);
         }
         mPrecedentTime = time;
-
-
     }
 
     private void logEventOnDraw(ArrayList<Long> data) {
@@ -107,7 +109,7 @@ public class Blink_View extends LinearLayout {
         mPrecedentTimeOnDraw = time;
     }
 
-    private void computeEventTime(String from,ArrayList<Long> data, long mPrecedentTime) {
+    private void computeEventTime(String from, ArrayList<Long> data, long mPrecedentTime) {
         long average = 0;
         long max = 0;
         long min = 250;
