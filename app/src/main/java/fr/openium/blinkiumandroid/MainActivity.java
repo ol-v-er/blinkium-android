@@ -27,28 +27,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
 
-        mHandler = new Handler(getMainLooper());
-        WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = 0.1F;
-        getWindow().setAttributes(layout);
 
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                WindowManager.LayoutParams layout = getWindow().getAttributes();
-                layout.screenBrightness = 0.5F;
-                getWindow().setAttributes(layout);
-            }
-        },2000);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                WindowManager.LayoutParams layout = getWindow().getAttributes();
-                layout.screenBrightness = 1F;
-                getWindow().setAttributes(layout);
-            }
-        },4000);
 
     }
 
