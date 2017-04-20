@@ -1,6 +1,7 @@
 package fr.openium.blinkiumandroid;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -44,6 +45,7 @@ public class Blink_View extends LinearLayout {
     private boolean countdown_flag = false, blinking_flag = false;
     private long lastTime = 0;
     private boolean test = true;
+    private float savedBrightness;
 
     public Blink_View(Context context) {
         super(context);
@@ -71,9 +73,11 @@ public class Blink_View extends LinearLayout {
         countdown.setGravity(Gravity.CENTER_VERTICAL);
         this.setOrientation(LinearLayout.VERTICAL);
         this.addView(countdown);
+
     }
 
     public void go(ArrayList<String> d){
+        setMaxBrightness();
         ArrayList<String> a = new ArrayList<String>();
         //a.add("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
         a.add("012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
@@ -83,6 +87,29 @@ public class Blink_View extends LinearLayout {
         index = 0;
         countdown_value = 3;
         countdown_flag = true;
+    }
+
+    private void setMaxBrightness() {
+        savedBrightness = getCurrentBrightness();
+        setBrightness(1.F);
+    }
+
+    private void restoreBrightness(){
+       setBrightness(savedBrightness);
+    }
+
+
+    private void setBrightness(float brightness){
+        Window window = ((Activity)getContext()).getWindow();
+        WindowManager.LayoutParams layout  = window.getAttributes();
+        layout.screenBrightness = brightness;
+        window.setAttributes(layout);
+    }
+
+    private float getCurrentBrightness(){
+        Window window = ((Activity)getContext()).getWindow();
+        WindowManager.LayoutParams layout  = window.getAttributes();
+        return layout.screenBrightness;
     }
 
 
@@ -181,13 +208,16 @@ public class Blink_View extends LinearLayout {
                 index = index + 1;
 
                 if (index == datas.length) {
-                    blinking_flag = false;
-                    computeEventTime("onDraw",mDataOnDraw,mPrecedentTimeOnDraw);
+                    onFinishSentData();
                 }
-
         }
-
         invalidate();
+    }
+
+    private void onFinishSentData() {
+        blinking_flag = false;
+        computeEventTime("onDraw",mDataOnDraw,mPrecedentTimeOnDraw);
+        restoreBrightness();
     }
 
     final private Handler handler = new Handler(){
@@ -197,4 +227,6 @@ public class Blink_View extends LinearLayout {
             updateView(msg);
         }
     };
+
+
 }
