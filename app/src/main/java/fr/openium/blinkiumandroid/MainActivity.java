@@ -1,8 +1,10 @@
 package fr.openium.blinkiumandroid;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private EditText mEditTextIdentifier;
     private EditText mEditTextPassword;
-
+    private Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
+        mHandler = new Handler(getMainLooper());
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = 0.1F;
+        getWindow().setAttributes(layout);
+
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                WindowManager.LayoutParams layout = getWindow().getAttributes();
+                layout.screenBrightness = 0.5F;
+                getWindow().setAttributes(layout);
+            }
+        },2000);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                WindowManager.LayoutParams layout = getWindow().getAttributes();
+                layout.screenBrightness = 1F;
+                getWindow().setAttributes(layout);
+            }
+        },4000);
+
     }
 
     @Override
