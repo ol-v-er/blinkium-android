@@ -19,6 +19,7 @@
         </activity>
         <activity
             android:name=".Blink_Activity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:keepScreenOn="true"
             android:hardwareAccelerated="true">

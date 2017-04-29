@@ -46,7 +46,7 @@ public class ConvertUtils {
             actualIndex += 8;
         }
 
-        byte[] synchro = new byte[60];
+        byte[] synchro = new byte[101];
         byte[] result = new byte[startCode.length + header.length + body.length + synchro.length];
 
         for(int i = 0; i < synchro.length; i++){
