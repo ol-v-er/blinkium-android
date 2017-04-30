@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -124,6 +125,8 @@ public class Blink_View extends LinearLayout {
     private void onFinishSentData() {
         blinking_flag = false;
         restoreBrightness();
+        Intent intent = new Intent(this.getContext(), MainActivity.class);
+        this.getContext().startActivity(intent);
     }
 
     private void updateCountdown(){
