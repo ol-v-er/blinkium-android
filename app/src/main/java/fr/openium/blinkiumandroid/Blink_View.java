@@ -11,6 +11,7 @@ import android.graphics.LinearGradient;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -73,8 +74,8 @@ public class Blink_View extends LinearLayout {
         countdown.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         countdown.setGravity(Gravity.CENTER_VERTICAL);
         this.setOrientation(LinearLayout.VERTICAL);
+        this.setKeepScreenOn(true);
         this.addView(countdown);
-
     }
 
     public void go(ArrayList<String> d){
@@ -132,18 +133,18 @@ public class Blink_View extends LinearLayout {
     private void updateCountdown(){
         long t = System.nanoTime();
         if(t - lastTime > 1000000000) {
-            if(countdown_value == 0){
+            countdown.setText(String.valueOf(countdown_value));
+            if(countdown_value == -1){
                 countdown_flag = false;
                 blinking_flag = true;
+                countdown.setText("");
             }
-            countdown.setText(String.valueOf(countdown_value));
             countdown_value = countdown_value - 1;
             lastTime = t;
         }
     }
 
     private void updateBlinking(Canvas canvas){
-        countdown.setText("");
         switch (datas[index]) {
             case BLACK:
                 canvas.drawRGB(0, 0, 0);
