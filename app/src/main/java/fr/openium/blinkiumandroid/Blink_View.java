@@ -126,6 +126,7 @@ public class Blink_View extends LinearLayout {
     private void onFinishSentData() {
         blinking_flag = false;
         restoreBrightness();
+        ((Activity)getContext()).finish();
         Intent intent = new Intent(this.getContext(), MainActivity.class);
         this.getContext().startActivity(intent);
     }
